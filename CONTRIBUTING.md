@@ -64,9 +64,6 @@ To guarantee consistent releases across core contributors, we use [foundry][] to
     - `foundry release {{version}}`
         - For example, `foundry release 3.5.0`
     - Under the hood, this will update the `package.json`, update our major/minor branches, run `npm run build`, use `git commit`, use `git tag`, and `npm publish`
-        - TODO: Add `CHANGELOG` checker to `package.json`
-        - TODO: Add `npm run build` to `package.json`
-        - TODO: Add `foundry-release-branches` to `package.json`
 
 [foundry]: https://github.com/twolfson/foundry
 [SemVer]: http://semver.org/
