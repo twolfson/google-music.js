@@ -55,10 +55,11 @@ Then, add it to your HTML and access it via `window.GoogleMusic`.
 ```
 
 #### Semver branches
-Additionally, we support hot-linked [SemVer][] branches via [rawgit.com][]. For example, when a new `3.x` or `3.3.x` release is introduced, these URLs will automatically pick up said changes:
+Additionally, we support hot-linked [SemVer][] branches via [gitcdn.xyz][]. For example, when a new `1.x.x` or `1.0.x` release is introduced, these URLs will automatically pick up said changes:
 
 -
 -
+- Please see our [Releases][] for the latest version
 
 We can use them in HTML in the same way as our [Vanilla][] setup.
 
@@ -66,7 +67,8 @@ We can use them in HTML in the same way as our [Vanilla][] setup.
 ```
 
 [semver]: http://semver.org/
-[rawgit.com]: http://rawgit.com/
+[gitcdn.xyz]: http://gitcdn.xyz/
+[Releases]: /releases
 [Vanilla]: #vanilla
 
 ## Documentation
