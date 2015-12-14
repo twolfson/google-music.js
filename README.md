@@ -54,6 +54,21 @@ Then, add it to your HTML and access it via `window.GoogleMusic`.
 </script>
 ```
 
+#### Semver branches
+Additionally, we support hot-linked [SemVer][] branches via [rawgit.com][]. For example, when a new `3.x` or `3.3.x` release is introduced, these URLs will automatically pick up said changes:
+
+-
+-
+
+We can use them in HTML in the same way as our [Vanilla][] setup.
+
+```html
+```
+
+[semver]: http://semver.org/
+[rawgit.com]: http://rawgit.com/
+[Vanilla]: #vanilla
+
 ## Documentation
 `google-music.js` exposes a constructor, `GoogleMusic` as its `module.exports` (`window.GoogleMusic` for `bower`/vanilla).
 
