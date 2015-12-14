@@ -64,11 +64,15 @@ Additionally, we support hot-linked [SemVer][] branches via [gitcdn.xyz][]. For 
 We can use them in HTML in the same way as our [Vanilla][] setup.
 
 ```html
+<script src="//"></script>
+<script>
+  window.googleMusic = new window.GoogleMusic(window); // Our Google Music API
+</script>
 ```
 
 [semver]: http://semver.org/
 [gitcdn.xyz]: http://gitcdn.xyz/
-[Releases]: /releases
+[Releases]: https://github.com/twolfson/google-music.js/releases
 [Vanilla]: #vanilla
 
 ## Documentation
