@@ -74,26 +74,35 @@ Retrieve the current volume setting
 
 - retVal `Number` - Integer from 0 to 100 representing volume
 
-#### `volume.setVolume(vol)`
+#### `volume.setVolume(vol, animationTime = 0)`
 Change the volume setting
 
 - vol `Number` - Integer to set volume to
+- animationTime `Number`
+    - Number of milliseconds to smoothly transition between the old volume and the new volume.
+    - By default, this is 0
 
-#### `volume.increaseVolume(amount)`
+#### `volume.increaseVolume(amount, animationTime = 0)`
 Raise the volume by an amount
 
 - amount `Number` - Optional number to raise volume by
     - For example, if volume is 50 and amount is 5, then the volume will change to 55
     - If we exceed 100 when adding new values, volume will stop at 100
     - By default, this is 5
+- animationTime `Number`
+    - Number of milliseconds to smoothly transition between the old volume and the new volume.
+    - By default, this is 0
 
-#### `volume.decreaseVolume(amount)`
+#### `volume.decreaseVolume(amount, animationTime = 0)`
 Lower the volume by an amount
 
 - amount `Number` - Optional number to lower volume by
     - For example, if volume is 50 and amount is 5, then the volume will change to 45
     - If we exceed 0 when subtracting new values, volume will stop at 0
     - By default, this is 5
+- animationTime `Number`
+    - Number of milliseconds to smoothly transition between the old volume and the new volume.
+    - By default, this is 0
 
 ### Playback
 `gmusic.playback` exposes interfaces to the state of music playback and its behavior (e.g. shuffle).
