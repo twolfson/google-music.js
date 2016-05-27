@@ -4,7 +4,7 @@ var browserUtils = require('./utils/browser');
 var browserMusicUtils = require('./utils/browser-music');
 
 // Start our tests
-describe.only('A new session with Google Music', function () {
+describe('A new session with Google Music', function () {
   browserUtils.openMusic({
     testName: 'Queue test'
   });
@@ -44,6 +44,9 @@ describe.only('A new session with Google Music', function () {
     });
 
     describe('when we clear the queue', function () {
+      before(function clearQueue (done) {
+        this.browser.executeAsync('window.gmusic.queue.clear(arguments[arguments.length - 1])', done);
+      });
       browserUtils.execute(function getPlaybackState () {
         window.gmusic.queue.clear();
       });

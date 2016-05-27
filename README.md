@@ -182,9 +182,9 @@ Retrieve the songs currently in the queue
 ```
 
 #### `queue.playSong(id)`
-Plays a song in the queue referenced via it's ID
+Plays a song in the queue referenced via its `id`
 
-- id `String` - An ID string fetched through `queue.getSongs()`.  If the ID is no longer in the queue an error will be thrown
+- id `String` - An `id` string fetched through `queue.getSongs()`.  If the `id` is no longer in the queue an error will be thrown
 
 #### `queue.clear(callback)`
 Clears the current queue

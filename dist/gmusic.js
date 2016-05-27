@@ -291,6 +291,8 @@ proto.queue = {
           cb();
         }
       }.bind(this), 200);
+    } else if (cb) {
+      cb();
     }
   },
 
