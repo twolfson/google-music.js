@@ -159,6 +159,38 @@ Trigger a visualization for the track. This is typically album art.
 
 **This is an untested method.**
 
+### Queue
+`gmusic.queue` exposes methods to query and control the current queue
+
+#### `queue.getSongs()`
+Retrieve the songs currently in the queue
+
+**Returns:**
+
+- retVal `Array` - An array of song objects representing the songs currently in the queue.  Song objects have the following structure
+
+```
+{
+  id: String,         // A unique ID for this song
+  title: String,      // The songs title
+  album: String,      // The songs album
+  artist: String,     // The songs artist
+  art: String,        // A URL to the album art for this song
+  playing: Boolean,   // True if the song is currently playing, false otherwise
+  duration: Number    // Duration of song in milliseconds
+}
+```
+
+#### `queue.playSong(id)`
+Plays a song in the queue referenced via its `id`
+
+- id `String` - An `id` string fetched through `queue.getSongs()`.  If the `id` is no longer in the queue an error will be thrown
+
+#### `queue.clear(callback)`
+Clears the current queue
+
+- callback `Function` - A function to be called when the queue has been cleared.  Clearing the queue is an **asynchronous** operation.
+
 ### Rating
 `gmusic.rating` exposes interfaces to the rating the current song.
 
@@ -221,6 +253,16 @@ gmusic.on('change:song', function (song) {
     - album `String` - Album of the song
     - art `String` - URL for album art of the song
     - duration `Number` - Milliseconds that the track will last for
+
+#### `.on('change:queue')`
+Triggers when the queue changes
+
+```js
+gmusic.on('change:queue', function (queue) {
+});
+```
+
+- queue `Array` - An array of the same structure as [`queue.getSongs()`](#queuegetsongs)
 
 #### `.on('change:shuffle')`
 Triggers when shuffle is toggled

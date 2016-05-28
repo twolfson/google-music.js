@@ -7,7 +7,7 @@ exports.playAnything = function () {
   before(function playAnythingFn (done) {
     // Find and click the I'm Feeling Lucky mix
     var browser = this.browser;
-    browser.waitForElementByCssSelector('[data-id=shuffle-my-library]', asserters.isDisplayed,
+    browser.waitForElementByCssSelector('[data-id=shuffle-my-library]', asserters.isVisible,
         10000, 100, function handleElement (err, el) {
       // If there was an error, callback with it
       if (err) {
