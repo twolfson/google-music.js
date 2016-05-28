@@ -5,6 +5,7 @@ window.GMusic = require('./main');
 },{"./main":2}],2:[function(require,module,exports){
 // Load in dependencies
 var assert = require('assert');
+var cssesc = require('cssesc');
 var EventEmitter = require('events').EventEmitter;
 var inherits = require('inherits');
 
@@ -64,6 +65,12 @@ function bind(context, fn) {
   return function bindFn () {
     return fn.apply(context, arguments);
   };
+}
+
+function dispatchEvent (el, etype) {
+  var evt = document.createEvent('Events');
+  evt.initEvent(etype, true, false);
+  el.dispatchEvent(evt);
 }
 
 // Define our constructor
@@ -247,16 +254,6 @@ proto.playback = {
 
 // Create a queue API
 proto.queue = {
-  _fireEvent: function (el, etype) {
-    if (el.fireEvent) {
-      el.fireEvent('on' + etype);
-    } else {
-      var evObj = document.createEvent('Events');
-      evObj.initEvent(etype, true, false);
-      el.dispatchEvent(evObj);
-    }
-  },
-
   _render: function (container, force) {
     // DEV: The queue isn't rendered till a click event is fired on this element
     //      We must hide the queue during the 400ms animation and then reveal it
@@ -270,13 +267,17 @@ proto.queue = {
       document.body.appendChild(style);
 
       // Render queue
-      this.queue._fireEvent(document.querySelector(SELECTORS.queue.triggerButton), 'click');
+      dispatchEvent(document.querySelector(SELECTORS.queue.triggerButton), 'click');
       setTimeout(function () {
         // Return queue to intitial state
-        this.queue._fireEvent(document.querySelector(SELECTORS.queue.triggerButton), 'click');
-        setTimeout(function () {
-          document.body.removeChild(style);
-        }, 20);
+        dispatchEvent(document.querySelector(SELECTORS.queue.triggerButton), 'click');
+        // Set interval in this cased is less resource intensive than running a MutationObserver for about 20ms
+        var waitForQueueToHide = setInterval(function () {
+          if (container.style.display === 'none') {
+            clearInterval(waitForQueueToHide);
+            document.body.removeChild(style);
+          }
+        }, 2);
       }.bind(this), 20);
     }
   },
@@ -322,8 +323,11 @@ proto.queue = {
   },
 
   playSong: function (id) {
-    var songRow = this.doc.querySelector('[data-id="' + id + '"]');
-    assert(songRow, 'Failed to find song with ID: ' + id);
+    var escapedId =  cssesc(id, {
+      quotes: 'double'
+    });
+    var songRow = this.doc.querySelector('[data-id="' + escapedId + '"]');
+    assert(songRow, 'Failed to find song with ID: ' + escapedId);
     songRow.querySelector('[data-id="play"]').click();
   }
 };
@@ -676,7 +680,7 @@ GMusic.SELECTORS = SELECTORS;
 // Export our constructor
 module.exports = GMusic;
 
-},{"assert":3,"events":4,"inherits":5}],3:[function(require,module,exports){
+},{"assert":3,"cssesc":4,"events":5,"inherits":6}],3:[function(require,module,exports){
 // http://wiki.commonjs.org/wiki/Unit_Testing/1.0
 //
 // THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
@@ -1037,7 +1041,188 @@ var objectKeys = Object.keys || function (obj) {
   return keys;
 };
 
-},{"util/":8}],4:[function(require,module,exports){
+},{"util/":9}],4:[function(require,module,exports){
+(function (global){
+/*! http://mths.be/cssesc v0.1.0 by @mathias */
+;(function(root) {
+
+	// Detect free variables `exports`
+	var freeExports = typeof exports == 'object' && exports;
+
+	// Detect free variable `module`
+	var freeModule = typeof module == 'object' && module &&
+		module.exports == freeExports && module;
+
+	// Detect free variable `global`, from Node.js or Browserified code,
+	// and use it as `root`
+	var freeGlobal = typeof global == 'object' && global;
+	if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal) {
+		root = freeGlobal;
+	}
+
+	/*--------------------------------------------------------------------------*/
+
+	var object = {};
+	var hasOwnProperty = object.hasOwnProperty;
+	var merge = function(options, defaults) {
+		if (!options) {
+			return defaults;
+		}
+		var key;
+		var result = {};
+		for (key in defaults) {
+			// `if (defaults.hasOwnProperty(key) { … }` is not needed here, since
+			// only recognized option names are used
+			result[key] = hasOwnProperty.call(options, key)
+				? options[key]
+				: defaults[key];
+		}
+		return result;
+	};
+
+	/*--------------------------------------------------------------------------*/
+
+	var regexAnySingleEscape = /[\x20-\x2C\x2E\x2F\x3B-\x40\x5B-\x5E\x60\x7B-\x7E]/;
+	var regexSingleEscape = /[\x20\x21\x23-\x26\x28-\x2C\x2E\x2F\x3B-\x40\x5B\x5D\x5E\x60\x7B-\x7E]/;
+	var regexAlwaysEscape = /['"\\]/;
+	var regexExcessiveSpaces = /(^|\\+)?(\\[A-F0-9]{1,6})\x20(?![a-fA-F0-9\x20])/g;
+
+	// http://mathiasbynens.be/notes/css-escapes#css
+	var cssesc = function(string, options) {
+
+		// Handle options
+		options = merge(options, cssesc.options);
+		if (options.quotes != 'single' && options.quotes != 'double') {
+			options.quotes = 'single';
+		}
+		var quote = options.quotes == 'double' ? '"' : '\'';
+		var isIdentifier = options.isIdentifier;
+
+		var firstChar = string.charAt(0);
+		var output = '';
+		var counter = 0;
+		var length = string.length;
+		var value;
+		var character;
+		var codePoint;
+		var extra; // used for potential low surrogates
+
+		while (counter < length) {
+			character = string.charAt(counter++);
+			codePoint = character.charCodeAt();
+			// if it’s not a printable ASCII character
+			if (codePoint < 0x20 || codePoint > 0x7E) {
+				if (codePoint >= 0xD800 && codePoint <= 0xDBFF && counter < length) {
+					// high surrogate, and there is a next character
+					extra = string.charCodeAt(counter++);
+					if ((extra & 0xFC00) == 0xDC00) { // next character is low surrogate
+						codePoint = ((codePoint & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000;
+					} else {
+						// unmatched surrogate; only append this code unit, in case the next
+						// code unit is the high surrogate of a surrogate pair
+						counter--;
+					}
+				}
+				value = '\\' + codePoint.toString(16).toUpperCase() + ' ';
+			} else {
+				if (options.escapeEverything) {
+					if (regexAnySingleEscape.test(character)) {
+						value = '\\' + character;
+					} else {
+						value = '\\' + codePoint.toString(16).toUpperCase() + ' ';
+					}
+				// `:` can be escaped as `\:`, but that fails in IE < 8
+				} else if (/[\t\n\f\r\x0B:]/.test(character)) {
+					if (!isIdentifier && character == ':') {
+						value = character;
+					} else {
+						value = '\\' + codePoint.toString(16).toUpperCase() + ' ';
+					}
+				} else if (
+					character == '\\' ||
+					(
+						!isIdentifier &&
+						(
+							(character == '"' && quote == character) ||
+							(character == '\'' && quote == character)
+						)
+					) ||
+					(isIdentifier && regexSingleEscape.test(character))
+				) {
+					value = '\\' + character;
+				} else {
+					value = character;
+				}
+			}
+			output += value;
+		}
+
+		if (isIdentifier) {
+			if (/^_/.test(output)) {
+				// Prevent IE6 from ignoring the rule altogether (in case this is for an
+				// identifier used as a selector)
+				output = '\\_' + output.slice(1);
+			} else if (/^-[-\d]/.test(output)) {
+				output = '\\-' + output.slice(1);
+			} else if (/\d/.test(firstChar)) {
+				output = '\\3' + firstChar + ' ' + output.slice(1);
+			}
+		}
+
+		// Remove spaces after `\HEX` escapes that are not followed by a hex digit,
+		// since they’re redundant. Note that this is only possible if the escape
+		// sequence isn’t preceded by an odd number of backslashes.
+		output = output.replace(regexExcessiveSpaces, function($0, $1, $2) {
+			if ($1 && $1.length % 2) {
+				// it’s not safe to remove the space, so don’t
+				return $0;
+			}
+			// strip the space
+			return ($1 || '') + $2;
+		});
+
+		if (!isIdentifier && options.wrap) {
+			return quote + output + quote;
+		}
+		return output;
+	};
+
+	// Expose default options (so they can be overridden globally)
+	cssesc.options = {
+		'escapeEverything': false,
+		'isIdentifier': false,
+		'quotes': 'single',
+		'wrap': false
+	};
+
+	cssesc.version = '0.1.0';
+
+	/*--------------------------------------------------------------------------*/
+
+	// Some AMD build optimizers, like r.js, check for specific condition patterns
+	// like the following:
+	if (
+		typeof define == 'function' &&
+		typeof define.amd == 'object' &&
+		define.amd
+	) {
+		define(function() {
+			return cssesc;
+		});
+	}	else if (freeExports && !freeExports.nodeType) {
+		if (freeModule) { // in Node.js or RingoJS v0.8.0+
+			freeModule.exports = cssesc;
+		} else { // in Narwhal or RingoJS v0.7.0-
+			freeExports.cssesc = cssesc;
+		}
+	} else { // in Rhino or a web browser
+		root.cssesc = cssesc;
+	}
+
+}(this));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],5:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1340,7 +1525,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -1365,7 +1550,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1425,14 +1610,14 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2022,4 +2207,4 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":7,"_process":6,"inherits":5}]},{},[1]);
+},{"./support/isBuffer":8,"_process":7,"inherits":6}]},{},[1]);

@@ -35,6 +35,7 @@
     "webdriver-manager-update": "webdriver-manager update --standalone"
   },
   "dependencies": {
+    "cssesc": "^0.1.0",
     "inherits": "~2.0.1"
   },
   "devDependencies": {
