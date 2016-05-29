@@ -210,17 +210,16 @@ proto.playback = {
   toggleShuffle: function () { this.playback._shuffleEl.click(); },
 
   getRepeat: function () {
-    // If repeat is inactive, return `NO REPEAT`
-    // DEV: `NO_REPEAT` shares same repeat icon as `LIST_REPEAT`
-    //  el.__data__icon === 'av:repeat'
-    if (this.playback._repeatEl.classList.contains('active')) {
-      return GMusic.Playback.NO_REPEAT;
-    // Otherwise if we are repeating once, return `SINGLE_REPEAT`
-    } else if (this.playback._repeatEl.__data__.icon === 'av:repeat-one') {
+    // Repeat element states:
+    //   SINGLE_REPEAT: {classList: ['active'], __data__: {icon: 'av:repeat-one'}}
+    //   LIST_REPEAT: {classList: ['active'], __data__: {icon: 'av:repeat'}}
+    //   NO_REPEAT: {classList: [], __data__: {icon: 'av:repeat'}}
+    if (this.playback._repeatEl.__data__.icon === 'av:repeat-one') {
       return GMusic.Playback.SINGLE_REPEAT;
-    // Otherwise, return `LIST_REPEAT`
-    } else {
+    } else if (this.playback._repeatEl.classList.contains('active')) {
       return GMusic.Playback.LIST_REPEAT;
+    } else {
+      return GMusic.Playback.NO_REPEAT;
     }
   },
 
