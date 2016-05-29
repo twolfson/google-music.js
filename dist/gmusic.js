@@ -112,7 +112,7 @@ proto.volume = {
 
   // Get the current volume level.
   getVolume: function () {
-    return parseInt(this.volume._sliderEl.getAttribute('aria-valuenow'), 10);
+    return this.volume._sliderEl.__data__.value;
   },
 
   // Set the volume level (0 - 100).
@@ -137,7 +137,7 @@ proto.volume = {
     }
   },
 
-  // Decrease the volume by an amount (default of 1)
+  // Decrease the volume by an amount (default of 5)
   decreaseVolume: function (amount) {
     if (amount === undefined) {
       amount = 5;
@@ -185,7 +185,8 @@ proto.playback = {
 
   // Time functions
   getPlaybackTime: function () {
-    return parseInt(this.playback._sliderEl.getAttribute('aria-valuenow'), 10);
+    // In milliseconds
+    return this.playback._sliderEl.value;
   },
 
   setPlaybackTime: function (milliseconds) {
@@ -201,8 +202,7 @@ proto.playback = {
   rewind: function () { this.playback._rewindEl.click(); },
 
   getShuffle: function () {
-    var title = this.playback._shuffleEl.getAttribute('title').toLowerCase();
-    if (title.indexOf('off') !== -1) {
+    if (this.playback._shuffleEl.classList.contains('active')) {
       return GMusic.Playback.ALL_SHUFFLE;
     } else {
       return GMusic.Playback.NO_SHUFFLE;
@@ -211,13 +211,16 @@ proto.playback = {
   toggleShuffle: function () { this.playback._shuffleEl.click(); },
 
   getRepeat: function () {
-    var title = this.playback._repeatEl.getAttribute('title').toLowerCase();
-    if (title.indexOf('repeat off') !== -1) {
-      return GMusic.Playback.NO_REPEAT;
-    } else if (title.indexOf('repeating all') !== -1) {
+    // States possible:
+    // no-repeat: No class 'active', icon: av:repeat
+    // repeat: Has class 'active', icon: av:repeat
+    // repeat-one: Has class 'active', icon: av:repeat-one
+    if (this.playback._repeatEl.__data__.icon === 'av:repeat-one') {
+      return GMusic.Playback.SINGLE_REPEAT;
+    } else if (this.playback._repeatEl.classList.contains('active')) {
       return GMusic.Playback.LIST_REPEAT;
     } else {
-      return GMusic.Playback.SINGLE_REPEAT;
+      return GMusic.Playback.NO_REPEAT;
     }
   },
 
