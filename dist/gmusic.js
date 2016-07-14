@@ -60,8 +60,8 @@ function bind(context, fn) {
   };
 }
 
-// Define textContent method to safely fetch textContent of unknown elements
-function textContent(elem, defaultText) {
+// Define getTextContent method to safely fetch textContent from unknown elements
+function getTextContent(elem, defaultText) {
   return elem ? (elem.textContent || defaultText) : defaultText;
 }
 
@@ -227,9 +227,9 @@ proto.playback = {
 
   getSongInfo: function () {
     var songInfo = {
-      title: textContent(this.doc.getElementById(SELECTORS.info.titleId), 'Unknown Title'),
-      artist: textContent(this.doc.getElementById(SELECTORS.info.artistId), 'Unknown Artist'),
-      album: textContent(this.doc.querySelector(SELECTORS.info.albumSelector), 'Unknown Album'),
+      title: getTextContent(this.doc.getElementById(SELECTORS.info.titleId), 'Unknown Title'),
+      artist: getTextContent(this.doc.getElementById(SELECTORS.info.artistId), 'Unknown Artist'),
+      album: getTextContent(this.doc.querySelector(SELECTORS.info.albumSelector), 'Unknown Album'),
       art: this.doc.getElementById(SELECTORS.info.albumArtId) || null,
       duration: this.doc.getElementById(SELECTORS.playback.sliderId).max
     };
@@ -404,6 +404,7 @@ proto.hooks = {
     var lastTitle = '';
     var lastArtist = '';
     var lastAlbum = '';
+    var lastArt = null;
 
     var addObserver = new MutationObserver(function (mutations) {
       mutations.forEach(function (m) {
@@ -414,12 +415,14 @@ proto.hooks = {
             var songInfo = that.playback.getSongInfo();
             // Make sure that this is the first of the notifications for the
             // insertion of the song information elements.
-            if (lastTitle !== songInfo.title || lastArtist !== songInfo.artist || lastAlbum !== songInfo.album) {
+            if (lastTitle !== songInfo.title || lastArtist !== songInfo.artist ||
+                lastAlbum !== songInfo.album || lastArt !== songInfo.art) {
               that.emit('change:song', songInfo);
 
               lastTitle = songInfo.title;
               lastArtist = songInfo.artist;
               lastAlbum = songInfo.album;
+              lastArt = songInfo.art;
             }
           }
         }
