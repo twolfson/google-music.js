@@ -48,6 +48,7 @@ exports.openMusic = function (options) {
   //   "Shuffle artists" is a much better and faster alternative
   options = options || {};
   var url = options.url || 'https://play.google.com/music/listen#/artists';
+  var loginUrl;
   var testName = options.testName;
   assert(
     testName,
@@ -107,6 +108,37 @@ exports.openMusic = function (options) {
       },
       function findPasswordInput (cb) {
         browser.waitForElementById('Passwd', asserters.isDisplayed, cb);
+      },
+      function enterPasswordIntoInput (el, cb) {
+        el.type(GOOGLE_MUSIC_JS_PASSWORD, cb);
+      },
+      function findLoginButton (cb) {
+        browser.waitForElementById('signIn', asserters.isDisplayed, cb);
+      },
+      function clickLoginButton (el, cb) {
+        el.click(cb);
+      }
+    ], done);
+  });
+  // DEV: In some countries like Germany, we are receiving password confirmation screen
+  before(function handlePasswordConfirmation (done) {
+    var browser = this.browser;
+
+    async.waterfall([
+      function findPasswordInput (cb) {
+        // Find the password confirmation field
+        setTimeout(function () {
+          browser.waitForElementById('Passwd', asserters.isDisplayed, function handlePasswordInput (err, el) {
+            console.log('heyooo', err);
+            // If there was no element, then jump to done
+            if (err) {
+              done();
+            // Otherwise, continue in waterfall
+            } else {
+              cb(null, el);
+            }
+          });
+        }, 1000);
       },
       function enterPasswordIntoInput (el, cb) {
         el.type(GOOGLE_MUSIC_JS_PASSWORD, cb);
