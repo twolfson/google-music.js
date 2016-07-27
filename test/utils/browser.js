@@ -127,6 +127,7 @@ exports.openMusic = function (options) {
     async.waterfall([
       function findPasswordInput (cb) {
         // Find the password confirmation field
+        // TODO: Remove setTimeout and replace with `continue` check in URL
         setTimeout(function () {
           browser.waitForElementById('Passwd', asserters.isDisplayed, function handlePasswordInput (err, el) {
             console.log('heyooo', err);
