@@ -48,7 +48,6 @@ exports.openMusic = function (options) {
   //   "Shuffle artists" is a much better and faster alternative
   options = options || {};
   var url = options.url || 'https://play.google.com/music/listen#/artists';
-  var loginUrl;
   var testName = options.testName;
   assert(
     testName,
@@ -124,33 +123,35 @@ exports.openMusic = function (options) {
   before(function handlePasswordConfirmation (done) {
     var browser = this.browser;
 
-    async.waterfall([
-      function findPasswordInput (cb) {
-        // Find the password confirmation field
-        // TODO: Remove setTimeout and replace with `continue` check in URL
-        setTimeout(function () {
-          browser.waitForElementById('Passwd', asserters.isDisplayed, function handlePasswordInput (err, el) {
-            console.log('heyooo', err);
-            // If there was no element, then jump to done
-            if (err) {
-              done();
-            // Otherwise, continue in waterfall
-            } else {
-              cb(null, el);
-            }
-          });
-        }, 1000);
-      },
-      function enterPasswordIntoInput (el, cb) {
-        el.type(GOOGLE_MUSIC_JS_PASSWORD, cb);
-      },
-      function findLoginButton (cb) {
-        browser.waitForElementById('signIn', asserters.isDisplayed, cb);
-      },
-      function clickLoginButton (el, cb) {
-        el.click(cb);
+    // Determine if we are on a confirmation page
+    browser.url(function handleUrl (err, currentUrl) {
+      // If there was an error, callback with it
+      if (err) {
+        return done(err);
       }
-    ], done);
+
+      // Otherwise if we are on a confirmation page, then re-enter password
+      // TODO: Replace `true` with actual check
+      if (true) {
+        console.log(currentUrl);
+        async.waterfall([
+          function findPasswordInput (cb) {
+            browser.waitForElementById('Passwd', asserters.isDisplayed, cb);
+          },
+          function enterPasswordIntoInput (el, cb) {
+            el.type(GOOGLE_MUSIC_JS_PASSWORD, cb);
+          },
+          function findLoginButton (cb) {
+            browser.waitForElementById('signIn', asserters.isDisplayed, cb);
+          },
+          function clickLoginButton (el, cb) {
+            el.click(cb);
+          }
+        ], done);
+      } else {
+        done();
+      }
+    });
   });
   before(function navigateToMusicAfterLogin (done) {
     this.browser.get(url, done);
