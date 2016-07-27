@@ -44,7 +44,7 @@ describe('A Google Music instance playing no music', function () {
 
     describe('via API', function () {
       browserUtils.execute(function getSongInfoFromApi () {
-        return window.gmusic.playback.getSongInfo();
+        return window.googleMusic.playback.getSongInfo();
       });
 
       it('has the artist/track info', function () {

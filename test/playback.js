@@ -183,10 +183,10 @@ describe('A Google Music instance', function () {
 
   describe('when we set shuffle to no shuffle', function () {
     browserUtils.execute(function setToNoShuffle () {
-      window.gmusic.playback.setShuffle(window.GMusic.Playback.NO_SHUFFLE);
+      window.googleMusic.playback.setShuffle(window.GoogleMusic.Playback.NO_SHUFFLE);
     });
     browserUtils.execute(function getShuffleMode () {
-      return window.gmusic.playback.getShuffle();
+      return window.googleMusic.playback.getShuffle();
     });
     it('was set to no shuffle', function () {
       expect(this.result).to.be.equal('NO_SHUFFLE');
@@ -195,10 +195,10 @@ describe('A Google Music instance', function () {
 
   describe('when we set shuffle to all', function () {
     browserUtils.execute(function setToNoShuffle () {
-      window.gmusic.playback.setShuffle(window.GMusic.Playback.ALL_SHUFFLE);
+      window.googleMusic.playback.setShuffle(window.GoogleMusic.Playback.ALL_SHUFFLE);
     });
     browserUtils.execute(function getShuffleMode () {
-      return window.gmusic.playback.getShuffle();
+      return window.googleMusic.playback.getShuffle();
     });
     it('was set to all', function () {
       expect(this.result).to.be.equal('ALL_SHUFFLE');
@@ -242,10 +242,10 @@ describe('A Google Music instance', function () {
 
   describe('when we set repeat to repeat list', function () {
     browserUtils.execute(function setToRepeatList () {
-      window.gmusic.playback.setRepeat(window.GMusic.Playback.LIST_REPEAT);
+      window.googleMusic.playback.setRepeat(window.GoogleMusic.Playback.LIST_REPEAT);
     });
     browserUtils.execute(function getRepeatMode () {
-      return window.gmusic.playback.getRepeat();
+      return window.googleMusic.playback.getRepeat();
     });
     it('was set to repeat list', function () {
       expect(this.result).to.be.equal('LIST_REPEAT');
@@ -254,10 +254,10 @@ describe('A Google Music instance', function () {
 
   describe('when we set repeat to repeat one', function () {
     browserUtils.execute(function setToRepeatOne () {
-      window.gmusic.playback.setRepeat(window.GMusic.Playback.SINGLE_REPEAT);
+      window.googleMusic.playback.setRepeat(window.GoogleMusic.Playback.SINGLE_REPEAT);
     });
     browserUtils.execute(function getRepeatMode () {
-      return window.gmusic.playback.getRepeat();
+      return window.googleMusic.playback.getRepeat();
     });
     it('was set to repeat one', function () {
       expect(this.result).to.be.equal('SINGLE_REPEAT');
@@ -266,10 +266,10 @@ describe('A Google Music instance', function () {
 
   describe('when we set repeat to no repeat', function () {
     browserUtils.execute(function setToNoRepeat () {
-      window.gmusic.playback.setRepeat(window.GMusic.Playback.NO_REPEAT);
+      window.googleMusic.playback.setRepeat(window.GoogleMusic.Playback.NO_REPEAT);
     });
     browserUtils.execute(function getRepeatMode () {
-      return window.gmusic.playback.getRepeat();
+      return window.googleMusic.playback.getRepeat();
     });
     it('was set to no repeat', function () {
       expect(this.result).to.be.equal('NO_REPEAT');

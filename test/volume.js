@@ -8,7 +8,7 @@ describe('Google Music', function () {
     testName: 'Volume control test'
   });
   browserUtils.execute(function getVolume () {
-    return window.gmusic.volume.getVolume();
+    return window.googleMusic.volume.getVolume();
   });
 
   it('has a volume amount', function () {

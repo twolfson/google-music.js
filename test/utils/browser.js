@@ -7,7 +7,7 @@ var functionToString = require('function-to-string');
 var wd = require('wd');
 
 // Resolve the compiled script
-var script = fs.readFileSync(__dirname + '/../../dist/gmusic.js', 'utf8');
+var script = fs.readFileSync(__dirname + '/../../dist/google-music.js', 'utf8');
 
 // Extract Google Music email/password from environment variables
 var GOOGLE_MUSIC_JS_EMAIL = process.env.GOOGLE_MUSIC_JS_EMAIL;
@@ -69,8 +69,8 @@ exports.openMusic = function (options) {
     //      stable than other platforms
     this.browser.init({
       browserName: 'chrome',
-      name: 'gmusic.js - ' + testName,
-      project: 'gmusic.js Selenium tests',
+      name: 'google-music.js - ' + testName,
+      project: 'google-music.js Selenium tests',
       platform: 'WIN8',
       'browserstack.user': BROWSERSTACK_USER,
       'browserstack.key': BROWSERSTACK_KEY
@@ -122,14 +122,14 @@ exports.openMusic = function (options) {
   before(function navigateToMusicAfterLogin (done) {
     this.browser.get(url, done);
   });
-  before(function loadGMusicConstructor (done) {
+  before(function loadGoogleMusicConstructor (done) {
     var that = this;
     this.browser.waitForElementById('material-vslider', asserters.isDisplayed, function executeScript () {
       that.browser.execute(script, done);
     });
   });
-  exports.execute(function startGMusicApi () {
-    window.gmusic = new window.GMusic(window);
+  exports.execute(function startGoogleMusicApi () {
+    window.googleMusic = new window.GoogleMusic(window);
   });
 
   // If we want to want to kill the session, clean it up

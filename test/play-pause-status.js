@@ -33,7 +33,7 @@ describe('A new session with Google Music', function () {
 
     describe('and when retreiving the playback state', function () {
       browserUtils.execute(function getPlaybackState () {
-        return window.gmusic.playback.getPlaybackState();
+        return window.googleMusic.playback.getPlaybackState();
       });
 
       it('lists the music as playing', function () {
@@ -65,7 +65,7 @@ describe('A new session with Google Music', function () {
 
         describe('and when retreving playback state', function () {
           browserUtils.execute(function getPlaybackState () {
-            return window.gmusic.playback.getPlaybackState();
+            return window.googleMusic.playback.getPlaybackState();
           });
 
           it('lists the music as paused', function () {
@@ -118,7 +118,7 @@ describe('A new session with Google Music', function () {
 
             describe('and when retreving playback state', function () {
               browserUtils.execute(function getPlaybackState () {
-                return window.gmusic.playback.getPlaybackState();
+                return window.googleMusic.playback.getPlaybackState();
               });
 
               it('lists the music as stopped', function () {
