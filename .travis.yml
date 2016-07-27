@@ -5,7 +5,7 @@ node_js:
   - "4.3"
 
 script:
-  - npm run lint
+  - npm run lint && npm run build
 
 notifications:
   email:
