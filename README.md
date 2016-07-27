@@ -6,7 +6,7 @@ Browser-side JS library for controlling [Google Music][].
 
 This was built as part of [google-music-webkit][], a [node-webkit][] wrapper around [Google Music][]. It was forked from [radiant-player-mac@v1.3.1][], developed and created by [Sajid Anwar][] and [James Fator][] to make it reusable and well tested.
 
-`gmusic.js` is not created by, affiliated with, or supported by Google Inc.
+`google-music.js` is not created by, affiliated with, or supported by Google Inc.
 
 [google-music-webkit]: https://github.com/twolfson/google-music-webkit
 [node-webkit]: https://github.com/rogerwang/node-webkit
@@ -138,7 +138,7 @@ Toggle between play and pause for the current song
     - 0 - Playback is stopped
     - 1 - Song is paused
     - 2 - Song is playing
-    - Values are available via `GMusic.Playback.STOPPED`, `GMusic.Playback.PAUSED`, and `GMusic.Playback.PLAYING`
+    - Values are available via `GoogleMusic.Playback.STOPPED`, `GoogleMusic.Playback.PAUSED`, and `GoogleMusic.Playback.PLAYING`
 
 #### `playback.forward()`
 Move to the next song
@@ -154,7 +154,7 @@ Retrieve the status of shuffle
 - retVal `String` - Current state of shuffle (e.g. `ALL_SHUFFLE`, `NO_SHUFFLE`)
     - `ALL_SHUFFLE` will shuffle between all tracks
     - `NO_SHUFFLE` will play the tracks in the order they were added
-    - We created constants named `GMusic.Playback.ALL_SHUFFLE` or `GMusic.Playback.NO_SHUFFLE`
+    - We created constants named `GoogleMusic.Playback.ALL_SHUFFLE` or `GoogleMusic.Playback.NO_SHUFFLE`
 
 #### `playback.setShuffle(mode)`
 Set the shuffle mode
@@ -220,7 +220,7 @@ Set the rating for the current track
 Removes existing rating from the current track
 
 ### Extras
-`gmusic.extras` is a collection of utility functions for Google Music
+`googleMusic.extras` is a collection of utility functions for Google Music
 
 #### `extras.getSongURL()`
 Retrieve the URL of the current song for sharing
@@ -245,7 +245,7 @@ googleMusic.on('change:song', function (song) {
 Triggers when a song changes
 
 ```js
-gmusic.on('change:song', function (song) {
+googleMusic.on('change:song', function (song) {
 });
 ```
 
@@ -379,7 +379,7 @@ npm test
 ```
 
 ##### Attribution
-We have an automatic build setup on Travis CI that will run every day to catch changes made by Google as quick as possible. These tests make use of BrowserStack's services to remotely run Selenium tests, huge thanks to [BrowserStack][] for the support of Open Source projects like this one!  
+We have an automatic build setup on Travis CI that will run every day to catch changes made by Google as quick as possible. These tests make use of BrowserStack's services to remotely run Selenium tests, huge thanks to [BrowserStack][] for the support of Open Source projects like this one!
 
 [BrowserStack]: https://www.browserstack.com/
 
