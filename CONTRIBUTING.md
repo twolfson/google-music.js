@@ -1,10 +1,10 @@
 # Contributing
-Community patches, bug reports, and contributions are always welcome and are crucial to ensure `gmusic.js` stays stable. Here are steps/guidelines to follow when contributing.
+Community patches, bug reports, and contributions are always welcome and are crucial to ensure `google-music.js` stays stable. Here are steps/guidelines to follow when contributing.
 
 ## Opening an issue
 Before starting work on an issue, please make sure that the issue isn't being worked on by anyone else. This can be verified by searching in open issues and pull requests:
 
-https://github.com/gmusic-utils/gmusic.js/issues
+https://github.com/twolfson/google-music.js/issues
 
 - If an issue already exists, please use that issue instead of creating a new one
 - Otherwise, please create a new issue

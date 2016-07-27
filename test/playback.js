@@ -13,7 +13,7 @@ describe('A Google Music instance playing music (via manual click)', function ()
 
   describe('when paused via our API', function () {
     browserUtils.execute(function pauseViaApi () {
-      window.gmusic.playback.playPause();
+      window.googleMusic.playback.playPause();
     });
     browserMusicUtils.waitForPlaybackPause();
 
@@ -23,7 +23,7 @@ describe('A Google Music instance playing music (via manual click)', function ()
 
     describe('when played via our API', function () {
       browserUtils.execute(function pauseViaApi () {
-        window.gmusic.playback.playPause();
+        window.googleMusic.playback.playPause();
       });
       browserMusicUtils.waitForPlaybackStart();
 
@@ -33,17 +33,17 @@ describe('A Google Music instance playing music (via manual click)', function ()
 
       describe('playing the next track', function () {
         browserUtils.execute(function getCurrentTrack () {
-          var selectors = window.GMusic.SELECTORS;
+          var selectors = window.GoogleMusic.SELECTORS;
           return document.getElementById(selectors.info.titleId).textContent;
         });
         before(function saveCurrentTrack () {
           this.track = this.result;
         });
         browserUtils.execute(function moveToNextTrack () {
-          window.gmusic.playback.forward();
+          window.googleMusic.playback.forward();
         });
         browserUtils.execute(function getNewTrack () {
-          var selectors = window.GMusic.SELECTORS;
+          var selectors = window.GoogleMusic.SELECTORS;
           return document.getElementById(selectors.info.titleId).textContent;
         });
         after(function cleanup () {
@@ -57,10 +57,10 @@ describe('A Google Music instance playing music (via manual click)', function ()
 
         describe('playing the previous track', function () {
           browserUtils.execute(function moveToPreviousTrack () {
-            window.gmusic.playback.rewind();
+            window.googleMusic.playback.rewind();
           });
           browserUtils.execute(function getNewTrack () {
-            var selectors = window.GMusic.SELECTORS;
+            var selectors = window.GoogleMusic.SELECTORS;
             return document.getElementById(selectors.info.titleId).textContent;
           });
 
@@ -79,10 +79,10 @@ describe('A Google Music instance not playing music', function () {
     testName: 'Not playing test'
   });
   browserUtils.execute(function getPlaybackNothing () {
-    return window.gmusic.playback.getPlaybackTime();
+    return window.googleMusic.playback.getPlaybackTime();
   });
   browserUtils.execute(function setupHooks () {
-    window.gmusic.on('change:playback-time', function playbackTimeChanged (playbackInfo) {
+    window.googleMusic.on('change:playback-time', function playbackTimeChanged (playbackInfo) {
       window.playbackTimeChanged = true;
     });
   });
@@ -97,7 +97,7 @@ describe('A Google Music instance not playing music', function () {
     browserMusicUtils.playAnything();
     browserMusicUtils.waitForPlaybackStart();
     browserUtils.execute(function getPlaybackStart () {
-      return window.gmusic.playback.getPlaybackTime();
+      return window.googleMusic.playback.getPlaybackTime();
     });
 
     it('is within the 0 to 10 seconds of playback', function () {
@@ -107,10 +107,10 @@ describe('A Google Music instance not playing music', function () {
 
     describe('when seeked to middle of a track', function () {
       browserUtils.execute(function getPlaybackStart () {
-        window.gmusic.playback.setPlaybackTime(60e3);
+        window.googleMusic.playback.setPlaybackTime(60e3);
       });
       browserUtils.execute(function getPlaybackMiddle () {
-        return window.gmusic.playback.getPlaybackTime();
+        return window.googleMusic.playback.getPlaybackTime();
       });
 
       it('is within 10 seconds of new playback', function () {

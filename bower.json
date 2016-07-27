@@ -1,12 +1,12 @@
 {
-  "name": "gmusic.js",
-  "version": "5.0.0",
-  "homepage": "https://github.com/gmusic-utils/gmusic.js",
+  "name": "google-music",
+  "version": "6.0.0",
+  "homepage": "https://github.com/twolfson/google-music.js",
   "authors": [
     "Todd Wolfson <todd@twolfson.com>"
   ],
   "description": "Browser-side JS library for controlling Google Music",
-  "main": "dist/gmusic.min.js",
+  "main": "dist/google-music.min.js",
   "keywords": [
     "google",
     "music",

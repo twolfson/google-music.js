@@ -1,4 +1,5 @@
-# gmusic.js [![Build Status](https://travis-ci.org/gmusic-utils/gmusic.js.svg?branch=master)](https://travis-ci.org/gmusic-utils/gmusic.js)
+# google-music.js [![Build Status](https://travis-ci.org/twolfson/google-music.js.svg?branch=master)](https://travis-ci.org/twolfson/google-music.js)
+
 Browser-side JS library for controlling [Google Music][].
 
 [Google Music]: https://play.google.com/music/
@@ -21,53 +22,53 @@ On Thursday May 14, 2015 Google launched a Material redesign of the site. This b
 
 ## Getting Started
 ### npm
-Install the module with: `npm install gmusic.js`
+Install the module with: `npm install google-music`
 
 ```js
-// Load and initialize GMusic
-var GMusic = require('gmusic.js');
-window.gmusic = new GMusic(window);
+// Load and initialize GoogleMusic
+var GoogleMusic = require('google-music');
+window.googleMusic = new GoogleMusic(window);
 
 // Access volume
-window.gmusic.volume.getVolume(); // 50 (ranges from 0 to 100)
+window.googleMusic.volume.getVolume(); // 50 (ranges from 0 to 100)
 ```
 
 ### bower
-Install the module with: `bower install gmusic.js`
+Install the module with: `bower install google-music`
 
-Once installed, add it to your HTML and access it via `window.GMusic`.
+Once installed, add it to your HTML and access it via `window.GoogleMusic`.
 
 ```html
-<script src="bower_components/gmusic.js/dist/gmusic.min.js"></script>
+<script src="bower_components/google-music/dist/google-music.min.js"></script>
 <script>
-  window.gmusic = new window.GMusic(window); // Our Google Music API
+  window.googleMusic = new window.GoogleMusic(window); // Our Google Music API
 </script>
 ```
 
 ### Vanilla
 If you are not using a package manager, download the latest script at:
 
-https://raw.githubusercontent.com/gmusic-utils/gmusic.js/master/dist/gmusic.min.js
+https://raw.githubusercontent.com/twolfson/google-music.js/master/dist/google-music.min.js
 
-Then, add it to your HTML and access it via `window.GMusic`.
+Then, add it to your HTML and access it via `window.GoogleMusic`.
 
 ```html
-<script src="gmusic.min.js"></script>
+<script src="google-music.min.js"></script>
 <script>
-  window.gmusic = new window.GMusic(window); // Our Google Music API
+  window.googleMusic = new window.GoogleMusic(window); // Our Google Music API
 </script>
 ```
 
 ## Documentation
-`gmusic.js` exposes a constructor, `GMusic` as its `module.exports` (`window.GMusic` for `bower`/vanilla).
+`google-music.js` exposes a constructor, `GoogleMusic` as its `module.exports` (`window.GoogleMusic` for `bower`/vanilla).
 
-### `new GMusic(window)`
+### `new GoogleMusic(window)`
 Constructor for a new Google Music API. For usage with `node-webkit`, we require `window` to be passed in rather than assumed from global scope.
 
 - window `Object` - Global `window` object for target browser window
 
 ### Volume
-`gmusic.volume` exposes interfaces to the volume controls of Google Music. Volume can range from 0 to 100 in steps of 5 (e.g. 10, 15, 20).
+`googleMusic.volume` exposes interfaces to the volume controls of Google Music. Volume can range from 0 to 100 in steps of 5 (e.g. 10, 15, 20).
 
 #### `volume.getVolume()`
 Retrieve the current volume setting
@@ -98,7 +99,7 @@ Lower the volume by an amount
     - By default, this is 5
 
 ### Playback
-`gmusic.playback` exposes interfaces to the state of music playback and its behavior (e.g. shuffle).
+`googleMusic.playback` exposes interfaces to the state of music playback and its behavior (e.g. shuffle).
 
 #### `playback.getPlaybackTime()`
 Retrieve the current progress in a song
@@ -173,7 +174,7 @@ Retrieve the current setting for repeat
     - `LIST_REPEAT` will repeat the queue when it reaches the last song
     - `SINGLE_REPEAT` will repeat the current song indefinitely
     - `NO_REPEAT` will not repeat the queue
-    - We created constants named `GMusic.Playback.LIST_REPEAT`, `GMusic.Playback.SINGLE_REPEAT`, `GMusic.Playback.NO_REPEAT`
+    - We created constants named `GoogleMusic.Playback.LIST_REPEAT`, `GoogleMusic.Playback.SINGLE_REPEAT`, `GoogleMusic.Playback.NO_REPEAT`
 
 #### `playback.setRepeat(mode)`
 Change the current setting for repeat
@@ -193,7 +194,7 @@ Trigger a visualization for the track. This is typically album art.
 **This is an untested method.**
 
 ### Rating
-`gmusic.rating` exposes interfaces to the rating the current song.
+`googleMusic.rating` exposes interfaces to the rating the current song.
 
 #### `rating.getRating()`
 Retrieve the rating for the current track.
@@ -236,7 +237,7 @@ Hooks are currently bound via `.on` and other corresponding methods for [node's 
 [EventEmitter]: http://nodejs.org/api/events.html
 
 ```js
-gmusic.on('change:song', function (song) {
+googleMusic.on('change:song', function (song) {
 });
 ```
 
@@ -254,7 +255,7 @@ gmusic.on('change:song', function (song) {
 Triggers when shuffle is toggled
 
 ```js
-gmusic.on('change:shuffle', function (mode) {
+googleMusic.on('change:shuffle', function (mode) {
 });
 ```
 
@@ -265,7 +266,7 @@ gmusic.on('change:shuffle', function (mode) {
 Triggers when repeat is toggled
 
 ```js
-gmusic.on('change:repeat', function (mode) {
+googleMusic.on('change:repeat', function (mode) {
 });
 ```
 
@@ -276,7 +277,7 @@ gmusic.on('change:repeat', function (mode) {
 Triggers when a song is started, paused, or stopped
 
 ```js
-gmusic.on('change:playback', function (mode) {
+googleMusic.on('change:playback', function (mode) {
 });
 ```
 
@@ -286,7 +287,7 @@ gmusic.on('change:playback', function (mode) {
 Triggers when playback shifts
 
 ```js
-gmusic.on('change:playback-time', function (playbackInfo) {
+googleMusic.on('change:playback-time', function (playbackInfo) {
 });
 ```
 
@@ -298,7 +299,7 @@ gmusic.on('change:playback-time', function (playbackInfo) {
 Triggers when the current song is rated
 
 ```js
-gmusic.on('change:rating', function (rating) {
+googleMusic.on('change:rating', function (rating) {
 });
 ```
 
@@ -423,7 +424,7 @@ Support this project and [others by twolfson][gratipay] via [gratipay][].
 ## License
 All files were originally licensed at `5ccfa7b3c7bc5231284f8e42c6a2f2e7fe1e1532` under the MIT license. This can be viewed its [`LICENSE.md`][]. It has been renamed to [LICENSE-MIT][] for ease of disambiguity.
 
-[`LICENSE.md`]: https://github.com/gmusic-utils/gmusic.js/blob/5ccfa7b3c7bc5231284f8e42c6a2f2e7fe1e1532/LICENSE.md
+[`LICENSE.md`]: https://github.com/twolfson/google-music.js/blob/5ccfa7b3c7bc5231284f8e42c6a2f2e7fe1e1532/LICENSE.md
 [LICENSE-MIT]: LICENSE-MIT
 
 After this commit, all alterations made by Todd Wolfson and future contributors are released to the Public Domain under the [UNLICENSE][].
