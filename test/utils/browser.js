@@ -119,7 +119,7 @@ exports.openMusic = function (options) {
       }
     ], done);
   });
-  // DEV: In some countries like Germany, we are receiving password confirmation screen
+  // DEV: In some countries like Germany/infrequently used accounts, we are receiving password confirmation screen
   before(function handlePasswordConfirmation (done) {
     var browser = this.browser;
 
