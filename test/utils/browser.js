@@ -123,35 +123,37 @@ exports.openMusic = function (options) {
   before(function handlePasswordConfirmation (done) {
     var browser = this.browser;
 
-    // Determine if we are on a confirmation page
-    browser.url(function handleUrl (err, currentUrl) {
-      // If there was an error, callback with it
-      if (err) {
-        return done(err);
-      }
+    // Wait for page navigation to complete
+    setTimeout(function waitForNavigation () {
+      // Determine if we are on a confirmation page
+      browser.url(function handleUrl (err, currentUrl) {
+        // If there was an error, callback with it
+        if (err) {
+          return done(err);
+        }
 
-      // Otherwise if we are on a confirmation page, then re-enter password
-      // TODO: Replace `true` with actual check
-      if (true) {
-        console.log(currentUrl);
-        async.waterfall([
-          function findPasswordInput (cb) {
-            browser.waitForElementById('Passwd', asserters.isDisplayed, cb);
-          },
-          function enterPasswordIntoInput (el, cb) {
-            el.type(GOOGLE_MUSIC_JS_PASSWORD, cb);
-          },
-          function findLoginButton (cb) {
-            browser.waitForElementById('signIn', asserters.isDisplayed, cb);
-          },
-          function clickLoginButton (el, cb) {
-            el.click(cb);
-          }
-        ], done);
-      } else {
-        done();
-      }
-    });
+        // Otherwise if we are on a confirmation page, then re-enter password
+        // https://accounts.google.com/ServiceLogin?service=sj&continue=https%3A%2F%2Fplay.google.com%2Fmusic%2Flisten&utm_medium=signed_out_warm_welcome&welcome=0
+        if (currentUrl.indexOf('continue=') !== -1) {
+          async.waterfall([
+            function findPasswordInput (cb) {
+              browser.waitForElementById('Passwd', asserters.isDisplayed, cb);
+            },
+            function enterPasswordIntoInput (el, cb) {
+              el.type(GOOGLE_MUSIC_JS_PASSWORD, cb);
+            },
+            function findLoginButton (cb) {
+              browser.waitForElementById('signIn', asserters.isDisplayed, cb);
+            },
+            function clickLoginButton (el, cb) {
+              el.click(cb);
+            }
+          ], done);
+        } else {
+          done();
+        }
+      });
+    }, 1000);
   });
   before(function navigateToMusicAfterLogin (done) {
     this.browser.get(url, done);
