@@ -1,4 +1,6 @@
 # google-music.js changelog
+6.0.1 - Repaired local test suite for slow internet and password confirmation screens
+
 6.0.0 - Renamed repository from `gmusic.js` to `google-music.js`
 
 5.0.0 - Added new methods `playback.setShuffle`, `playback.setRepeat`, `playback.getSongInfo`, and `playback.getPlaybackState`. Also modified `setRepeat` to handle the old functionality of `toggleRepeat` which now only toggles states. Added new documentation for methods.
