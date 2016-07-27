@@ -1,4 +1,6 @@
-# gmusic.js changelog
+# google-music.js changelog
+6.0.0 - Renamed repository from `gmusic.js` to `google-music.js`
+
 5.0.0 - Added new methods `playback.setShuffle`, `playback.setRepeat`, `playback.getSongInfo`, and `playback.getPlaybackState`. Also modified `setRepeat` to handle the old functionality of `toggleRepeat` which now only toggles states. Added new documentation for methods.
 
 4.2.1 - Repaired i18n support by removing English only strings via @ jostrander in #39 and #40
@@ -17,7 +19,7 @@
 
 4.0.1 - Removed branch whitelist from `.travis.yml`
 
-4.0.0 - Renamed repository from `google-music` to `gmusic.js`
+4.0.0 - Renamed repository from `google-music.js` to `gmusic.js`
 
 3.3.4 - Integrated Travis CI
 
