@@ -4,16 +4,8 @@ node_js:
   # Always keep up to date with the LTS stream
   - "4.3"
 
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # Give xvfb some time to start
-  - npm run webdriver-manager-update
-  - npm run webdriver-manager-start &> /dev/null &
-  - sleep 3 # Give selenium some time to start
-
 script:
-  - "if test \"$TRAVIS_PULL_REQUEST\" = \"false\"; then npm run test-browserstack; else npm run lint; fi"
+  - npm run lint
 
 notifications:
   email:
