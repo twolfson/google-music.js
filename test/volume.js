@@ -19,10 +19,10 @@ describe('Google Music', function () {
 
   describe('when volume is set to 50', function () {
     browserUtils.execute(function getNewVolume () {
-      return window.gmusic.volume.setVolume(50);
+      return window.googleMusic.volume.setVolume(50);
     });
     browserUtils.execute(function getNewVolume () {
-      return window.gmusic.volume.getVolume();
+      return window.googleMusic.volume.getVolume();
     });
 
     it('has a volume of 50', function () {
@@ -31,10 +31,10 @@ describe('Google Music', function () {
 
     describe('when volume is increased', function () {
       browserUtils.execute(function getNewVolume () {
-        return window.gmusic.volume.increaseVolume(10);
+        return window.googleMusic.volume.increaseVolume(10);
       });
       browserUtils.execute(function getNewVolume () {
-        return window.gmusic.volume.getVolume();
+        return window.googleMusic.volume.getVolume();
       });
 
       it('has an increased volume', function () {
@@ -43,10 +43,10 @@ describe('Google Music', function () {
 
       describe('when volume is decreased', function () {
         browserUtils.execute(function getNewVolume () {
-          return window.gmusic.volume.decreaseVolume(10);
+          return window.googleMusic.volume.decreaseVolume(10);
         });
         browserUtils.execute(function getNewVolume () {
-          return window.gmusic.volume.getVolume();
+          return window.googleMusic.volume.getVolume();
         });
 
         it('has the original volume', function () {
@@ -58,10 +58,10 @@ describe('Google Music', function () {
     // DEV: This is necessary to verify `setVolume` works and isn't the original setting only
     describe('when volume is set to 0', function () {
       browserUtils.execute(function getNewVolume () {
-        return window.gmusic.volume.setVolume(0);
+        return window.googleMusic.volume.setVolume(0);
       });
       browserUtils.execute(function getNewVolume () {
-        return window.gmusic.volume.getVolume();
+        return window.googleMusic.volume.getVolume();
       });
 
       it('has a volume of 0', function () {

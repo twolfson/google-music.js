@@ -11,7 +11,7 @@ describe('A track in Google Music', function () {
   });
   browserUtils.execute(function setupHooks () {
     window.ratingCount = 0;
-    window.gmusic.on('change:rating', function ratingChanged (rating) {
+    window.googleMusic.on('change:rating', function ratingChanged (rating) {
       window.ratingCount += 1;
     });
   });
@@ -26,10 +26,10 @@ describe('A track in Google Music', function () {
       window.gmusic.rating.resetRating();
     });
     browserUtils.execute(function thumbsUpTrack () {
-      window.gmusic.rating.toggleThumbsUp();
+      window.googleMusic.rating.toggleThumbsUp();
     });
     browserUtils.execute(function thumbsUpTrack () {
-      return window.gmusic.rating.getRating();
+      return window.googleMusic.rating.getRating();
     });
 
     it('has a high rating', function () {
@@ -38,10 +38,10 @@ describe('A track in Google Music', function () {
 
     describe('when switched to neutral', function () {
       browserUtils.execute(function thumbsUpTrack () {
-        window.gmusic.rating.toggleThumbsUp();
+        window.googleMusic.rating.toggleThumbsUp();
       });
       browserUtils.execute(function thumbsUpTrack () {
-        return window.gmusic.rating.getRating();
+        return window.googleMusic.rating.getRating();
       });
 
       it('has no rating', function () {
@@ -50,10 +50,10 @@ describe('A track in Google Music', function () {
 
       describe('when a rating is set via `setRating`', function () {
         browserUtils.execute(function setRating () {
-          window.gmusic.rating.setRating('5');
+          window.googleMusic.rating.setRating('5');
         });
         browserUtils.execute(function setRating () {
-          return window.gmusic.rating.getRating();
+          return window.googleMusic.rating.getRating();
         });
         it('becomes set', function () {
           expect(this.result).to.equal('5');
@@ -61,10 +61,10 @@ describe('A track in Google Music', function () {
 
         describe('and when set again', function () {
           browserUtils.execute(function setRating () {
-            window.gmusic.rating.setRating('5');
+            window.googleMusic.rating.setRating('5');
           });
           browserUtils.execute(function setRating () {
-            return window.gmusic.rating.getRating();
+            return window.googleMusic.rating.getRating();
           });
 
           it('remains set', function () {

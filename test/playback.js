@@ -137,18 +137,18 @@ describe('A Google Music instance', function () {
   });
   browserUtils.execute(function setupHooks () {
     window.repeatCount = 0;
-    window.gmusic.on('change:repeat', function repeatChanged (mode) {
+    window.googleMusic.on('change:repeat', function repeatChanged (mode) {
       window.repeatCount += 1;
     });
     window.shuffleCount = 0;
-    window.gmusic.on('change:shuffle', function shuffleChanged (mode) {
+    window.googleMusic.on('change:shuffle', function shuffleChanged (mode) {
       window.shuffleCount += 1;
     });
   });
 
   describe('when we toggle shuffle', function () {
     browserUtils.execute(function getShuffleMode () {
-      return window.gmusic.playback.getShuffle();
+      return window.googleMusic.playback.getShuffle();
     });
     before(function saveFirstShuffle () {
       this.firstShuffle = this.result;
@@ -157,10 +157,10 @@ describe('A Google Music instance', function () {
       delete this.firstShuffle;
     });
     browserUtils.execute(function moveToNextTrack () {
-      window.gmusic.playback.toggleShuffle();
+      window.googleMusic.playback.toggleShuffle();
     });
     browserUtils.execute(function getSecondShuffleMode () {
-      return window.gmusic.playback.getShuffle();
+      return window.googleMusic.playback.getShuffle();
     });
 
     it('goes to the next mode', function () {
@@ -207,7 +207,7 @@ describe('A Google Music instance', function () {
 
   describe('when we toggle repeat', function () {
     browserUtils.execute(function getFirstRepeat () {
-      return window.gmusic.playback.getRepeat();
+      return window.googleMusic.playback.getRepeat();
     });
     before(function saveFirstRepeat () {
       this.repeat = this.result;
@@ -216,10 +216,10 @@ describe('A Google Music instance', function () {
       delete this.repeat;
     });
     browserUtils.execute(function moveToNextTrack () {
-      window.gmusic.playback.toggleRepeat();
+      window.googleMusic.playback.toggleRepeat();
     });
     browserUtils.execute(function getNextRepeat () {
-      return window.gmusic.playback.getRepeat();
+      return window.googleMusic.playback.getRepeat();
     });
 
     it('goes to the next mode', function () {
