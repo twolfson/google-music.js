@@ -1,4 +1,6 @@
 # google-music.js changelog
+6.0.2 - Replaced Gratipay with support me page
+
 6.0.1 - Repaired local test suite for slow internet and password confirmation screens
 
 6.0.0 - Renamed repository from `gmusic.js` to `google-music.js`
