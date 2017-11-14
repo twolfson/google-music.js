@@ -414,12 +414,12 @@ browser;
 ```
 
 ## Donating
-Support this project and [others by twolfson][gratipay] via [gratipay][].
+Support this project and [others by twolfson][twolfson-projects] via [donations][twolfson-support-me].
 
-[![Support via Gratipay][gratipay-badge]][gratipay]
+<http://twolfson.com/support-me>
 
-[gratipay-badge]: https://cdn.rawgit.com/gratipay/gratipay-badge/2.x.x/dist/gratipay.png
-[gratipay]: https://www.gratipay.com/twolfson/
+[twolfson-projects]: http://twolfson.com/projects
+[twolfson-support-me]: http://twolfson.com/support-me
 
 ## License
 All files were originally licensed at `5ccfa7b3c7bc5231284f8e42c6a2f2e7fe1e1532` under the MIT license. This can be viewed its [`LICENSE.md`][]. It has been renamed to [LICENSE-MIT][] for ease of disambiguity.
