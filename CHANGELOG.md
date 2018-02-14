@@ -1,4 +1,6 @@
 # google-music.js changelog
+6.1.0 - Upgraded to `uglify-js@3.3.10` to fix GitHub vulnerability warning
+
 6.0.2 - Replaced Gratipay with support me page
 
 6.0.1 - Repaired local test suite for slow internet and password confirmation screens
