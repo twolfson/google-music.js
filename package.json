@@ -51,7 +51,7 @@
     "mocha": "~1.11.0",
     "protractor": "~1.5.0",
     "twolfson-style": "~1.6.0",
-    "uglify-js": "~2.4.16",
+    "uglify-js": "~3.3.10",
     "wd": "~0.3.11"
   },
   "keywords": [
